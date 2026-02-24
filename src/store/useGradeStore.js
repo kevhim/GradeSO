@@ -1,31 +1,122 @@
 import { create } from 'zustand';
+import { supabase } from '../lib/supabase';
 
 const useGradeStore = create((set, get) => ({
-    // Auth
+    // Auth & Sync State
     session: null,
     profile: null,
+    isLoading: false,
+    error: null,
     setSession: (session) => set({ session }),
     setProfile: (profile) => set({ profile }),
+
+    // Fetches all user data from Supabase
+    fetchTelemetryData: async (userId) => {
+        set({ isLoading: true, error: null });
+        try {
+            // Fetch Profile
+            const { data: profileData, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', userId)
+                .single();
+            if (profileError) throw profileError;
+
+            set({ profile: profileData });
+
+            // Fetch Semesters
+            const { data: semestersData, error: semestersError } = await supabase
+                .from('semesters')
+                .select('*')
+                .eq('student_id', userId)
+                .order('semester_number', { ascending: true });
+            if (semestersError) throw semestersError;
+
+            set({ semesters: semestersData });
+
+            // Set active semester to the latest one or current_semester from profile
+            if (semestersData.length > 0) {
+                const activeSem = profileData?.current_semester
+                    ? semestersData.find(s => s.semester_number === profileData.current_semester)
+                    : semestersData[semestersData.length - 1];
+                if (activeSem) set({ activeSemesterId: activeSem.id });
+            }
+
+            // Fetch Courses for all these semesters
+            const semesterIds = semestersData.map(s => s.id);
+            if (semesterIds.length > 0) {
+                const { data: coursesData, error: coursesError } = await supabase
+                    .from('courses')
+                    .select('*')
+                    .in('semester_id', semesterIds);
+                if (coursesError) throw coursesError;
+
+                // Group courses by semesterId
+                const coursesBySem = {};
+                coursesData.forEach(course => {
+                    if (!coursesBySem[course.semester_id]) {
+                        coursesBySem[course.semester_id] = [];
+                    }
+                    coursesBySem[course.semester_id].push(course);
+                });
+
+                set({ coursesBySemester: coursesBySem });
+            }
+
+        } catch (err) {
+            console.error("Error fetching telemetry:", err);
+            set({ error: err.message });
+        } finally {
+            set({ isLoading: false });
+        }
+    },
 
     // Semesters
     semesters: [],
     activeSemesterId: null,
     setSemesters: (semesters) => set({ semesters }),
     setActiveSemesterId: (id) => set({ activeSemesterId: id }),
-    addSemester: (semester) => set((s) => ({ semesters: [...s.semesters, semester] })),
+
+    addSemester: async (semester) => {
+        set((s) => ({ semesters: [...s.semesters, semester] }));
+        const { error } = await supabase.from('semesters').insert(semester);
+        if (error) {
+            console.error("Failed to add semester:", error);
+            set((s) => ({ semesters: s.semesters.filter(sem => sem.id !== semester.id) }));
+        }
+    },
 
     // Courses (keyed by semesterId)
     coursesBySemester: {},
     setCourses: (semesterId, courses) =>
         set((s) => ({ coursesBySemester: { ...s.coursesBySemester, [semesterId]: courses } })),
-    addCourse: (semesterId, course) =>
+
+    addCourse: async (semesterId, course) => {
         set((s) => ({
             coursesBySemester: {
                 ...s.coursesBySemester,
                 [semesterId]: [...(s.coursesBySemester[semesterId] || []), course],
             },
-        })),
-    updateCourse: (semesterId, courseId, updates) =>
+        }));
+
+        const { error } = await supabase.from('courses').insert({
+            ...course,
+            semester_id: semesterId
+        });
+
+        if (error) {
+            console.error("Failed to add course:", error);
+            set((s) => ({
+                coursesBySemester: {
+                    ...s.coursesBySemester,
+                    [semesterId]: s.coursesBySemester[semesterId].filter(c => c.id !== course.id)
+                }
+            }));
+        }
+    },
+
+    updateCourse: async (semesterId, courseId, updates) => {
+        const previousCourses = get().coursesBySemester[semesterId] || [];
         set((s) => ({
             coursesBySemester: {
                 ...s.coursesBySemester,
@@ -33,14 +124,40 @@ const useGradeStore = create((set, get) => ({
                     c.id === courseId ? { ...c, ...updates } : c
                 ),
             },
-        })),
-    deleteCourse: (semesterId, courseId) =>
+        }));
+
+        const { error } = await supabase.from('courses').update(updates).eq('id', courseId);
+        if (error) {
+            console.error("Failed to update course:", error);
+            set((s) => ({
+                coursesBySemester: {
+                    ...s.coursesBySemester,
+                    [semesterId]: previousCourses
+                }
+            }));
+        }
+    },
+
+    deleteCourse: async (semesterId, courseId) => {
+        const previousCourses = get().coursesBySemester[semesterId] || [];
         set((s) => ({
             coursesBySemester: {
                 ...s.coursesBySemester,
                 [semesterId]: s.coursesBySemester[semesterId].filter((c) => c.id !== courseId),
             },
-        })),
+        }));
+
+        const { error } = await supabase.from('courses').delete().eq('id', courseId);
+        if (error) {
+            console.error("Failed to delete course:", error);
+            set((s) => ({
+                coursesBySemester: {
+                    ...s.coursesBySemester,
+                    [semesterId]: previousCourses
+                }
+            }));
+        }
+    },
 
     // Computed SGPA (derived client-side — never from DB)
     getSGPA: (semesterId) => {

@@ -62,34 +62,34 @@ export default function AuthModule() {
     };
 
     return (
-        <div ref={containerRef} className="fixed inset-0 z-50 flex items-center justify-center bg-void text-ghost px-4">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-plasma/10 to-void/0 pointer-events-none" />
+        <div ref={containerRef} className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A14] text-[#F0EFF4] px-4">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#7B61FF]/10 to-[#0A0A14]/0 pointer-events-none" />
 
-            <div className="auth-card w-full max-w-md bg-graphite rounded-4xl p-8 shadow-2xl border border-plasma/20 relative overflow-hidden">
-                <h1 className="text-3xl font-sora font-bold text-center mb-6 tracker-tight">GradeOS</h1>
+            <div className="auth-card w-full max-w-md bg-[#12121A] rounded-[2rem] p-8 shadow-[0_20px_60px_-15px_rgba(123,97,255,0.2)] border border-[#7B61FF]/20 relative overflow-hidden">
+                <h1 className="text-4xl font-sora font-bold text-center mb-6 tracking-tight">GradeOS</h1>
 
-                {error && <div className="text-red-400 text-sm mb-4 text-center font-mono">{error}</div>}
-                {success && <div className="text-green-400 text-sm mb-4 text-center font-mono">{success}</div>}
+                {error && <div className="text-red-400 text-sm mb-4 text-center font-fira">{error}</div>}
+                {success && <div className="text-green-400 text-sm mb-4 text-center font-fira">{success}</div>}
 
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                     {view === 'signup' && (
                         <>
-                            <input name="name" type="text" placeholder="Full Name" required className="bg-void/50 border border-plasma/30 rounded-2xl px-4 py-3 text-ghost focus:border-plasma outline-none focus:ring-1 focus:ring-plasma transition-colors" />
-                            <select name="semester" required className="bg-void/50 border border-plasma/30 rounded-2xl px-4 py-3 text-ghost/70 focus:border-plasma outline-none appearance-none">
+                            <input name="name" type="text" placeholder="Full Name" required className="bg-[#0A0A14]/50 border border-[#7B61FF]/30 rounded-2xl px-4 py-3 text-[#F0EFF4] focus:border-[#7B61FF] outline-none focus:ring-1 focus:ring-[#7B61FF] transition-colors font-sora" />
+                            <select name="semester" required className="bg-[#0A0A14]/50 border border-[#7B61FF]/30 rounded-2xl px-4 py-3 text-[#F0EFF4]/70 focus:border-[#7B61FF] outline-none appearance-none font-sora">
                                 <option value="" disabled selected>Current Semester</option>
-                                {[1, 2, 3, 4, 5, 6, 7, 8].map(s => <option key={s} value={s} className="bg-graphite text-ghost">Semester {s}</option>)}
+                                {[1, 2, 3, 4, 5, 6, 7, 8].map(s => <option key={s} value={s} className="bg-[#12121A] text-[#F0EFF4]">Semester {s}</option>)}
                             </select>
                         </>
                     )}
 
-                    <input name="email" type="email" placeholder="Email Address" required className="bg-void/50 border border-plasma/30 rounded-2xl px-4 py-3 text-ghost focus:border-plasma outline-none focus:ring-1 focus:ring-plasma transition-colors" />
+                    <input name="email" type="email" placeholder="Email Address" required className="bg-[#0A0A14]/50 border border-[#7B61FF]/30 rounded-2xl px-4 py-3 text-[#F0EFF4] focus:border-[#7B61FF] outline-none focus:ring-1 focus:ring-[#7B61FF] transition-colors font-sora" />
 
                     {view !== 'forgot' && (
-                        <input name="password" type="password" placeholder="Password" required className="bg-void/50 border border-plasma/30 rounded-2xl px-4 py-3 text-ghost focus:border-plasma outline-none focus:ring-1 focus:ring-plasma transition-colors" />
+                        <input name="password" type="password" placeholder="Password" required className="bg-[#0A0A14]/50 border border-[#7B61FF]/30 rounded-2xl px-4 py-3 text-[#F0EFF4] focus:border-[#7B61FF] outline-none focus:ring-1 focus:ring-[#7B61FF] transition-colors font-sora" />
                     )}
 
-                    <button type="submit" disabled={loading} className="mt-2 bg-plasma text-white rounded-2xl py-3 font-semibold relative overflow-hidden group transition-transform duration-300 hover:scale-[1.03] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] active:scale-95 disabled:opacity-50">
-                        <span className="relative z-10 flex items-center justify-center">
+                    <button type="submit" disabled={loading} className="mt-4 btn-plasma w-full disabled:opacity-50">
+                        <span className="relative z-10 flex items-center justify-center font-sora">
                             {loading ? <Loader2 className="animate-spin h-5 w-5" /> : (
                                 view === 'signin' ? 'Sign In' : view === 'signup' ? 'Create Account' : 'Send Reset Link'
                             )}
@@ -97,16 +97,16 @@ export default function AuthModule() {
                     </button>
                 </form>
 
-                <div className="mt-6 text-center text-sm text-ghost/50 flex flex-col space-y-2">
+                <div className="mt-6 text-center text-sm text-[#F0EFF4]/50 flex flex-col space-y-2 font-sora">
                     {view === 'signin' ? (
                         <>
-                            <button onClick={() => setView('signup')} className="hover:text-plasma transition-colors">Don't have an account? Sign up</button>
-                            <button onClick={() => setView('forgot')} className="hover:text-plasma transition-colors">Forgot password?</button>
+                            <button onClick={() => setView('signup')} className="hover:text-[#7B61FF] transition-colors">Don't have an account? Sign up</button>
+                            <button onClick={() => setView('forgot')} className="hover:text-[#7B61FF] transition-colors">Forgot password?</button>
                         </>
                     ) : view === 'signup' ? (
-                        <button onClick={() => setView('signin')} className="hover:text-plasma transition-colors">Already have an account? Sign in</button>
+                        <button onClick={() => setView('signin')} className="hover:text-[#7B61FF] transition-colors">Already have an account? Sign in</button>
                     ) : (
-                        <button onClick={() => setView('signin')} className="hover:text-plasma transition-colors">Back to Sign in</button>
+                        <button onClick={() => setView('signin')} className="hover:text-[#7B61FF] transition-colors">Back to Sign in</button>
                     )}
                 </div>
             </div>

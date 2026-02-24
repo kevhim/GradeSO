@@ -7,32 +7,34 @@ import LandingPage from './pages/LandingPage';
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 
 function App() {
-  const { session, setSession, setProfile, darkMode } = useGradeStore();
+  const { session, setSession, fetchTelemetryData, isLoading } = useGradeStore();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-      if (session) fetchProfile(session.user.id);
+      if (session) fetchTelemetryData(session.user.id);
     });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      if (session) fetchProfile(session.user.id);
+      if (session) fetchTelemetryData(session.user.id);
     });
     return () => subscription.unsubscribe();
   }, []);
 
-  const fetchProfile = async (userId) => {
-    const { data } = await supabase.from('profiles').select('*').eq('id', userId).single();
-    if (data) setProfile(data);
-  };
+  const loader = (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#0A0A14] text-[#7B61FF] font-fira gap-4">
+      <div className="w-8 h-8 rounded-full border-2 border-[#7B61FF] border-t-transparent shadow-[0_0_15px_#7B61FF] animate-spin"></div>
+      <span className="tracking-widest text-[10px] uppercase">// SYNCING TELEMETRY</span>
+    </div>
+  );
 
   return (
-    <div className={darkMode ? 'bg-void text-ghost min-h-screen' : 'bg-ghost text-graphite min-h-screen'}>
+    <div className="bg-[#0A0A14] text-[#F0EFF4] min-h-screen selection:bg-[#7B61FF]/30">
       {!session ? (
         <LandingPage />
       ) : (
-        <Suspense fallback={<div className="flex items-center justify-center min-h-screen text-plasma font-mono">Loading GradeOS...</div>}>
-          <Dashboard />
+        <Suspense fallback={loader}>
+          {isLoading ? loader : <Dashboard />}
         </Suspense>
       )}
     </div>

@@ -2,6 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Preset D Palette Base */
+    --background: 10 10 20; /* #0A0A14 */
+  }
+  
+  body {
+    @apply bg-[#0A0A14] text-[#F0EFF4];
+    font-family: 'Sora', sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-instrument {
+    font-family: 'Instrument Serif', serif;
+  }
+  .font-fira {
+    font-family: 'Fira Code', monospace;
+  }
+  
+  .delay-75 {
+    transition-delay: 75ms;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
+
+/* Preset D - Smooth UI rules */
+@layer components {
+  /* Magnetic Button Feel */
+  .btn-magnetic {
+    @apply relative overflow-hidden transition-transform duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
+  }
+  .btn-magnetic:hover {
+    transform: translateY(-2px) scale(1.03);
+  }
+  
+  /* Sliding background layer for buttons */
+  .btn-plasma {
+    @apply bg-[#7B61FF] text-white rounded-full font-bold px-8 py-3 btn-magnetic;
+  }
+  .btn-plasma::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20 -translate-x-full transition-transform duration-[400ms] ease-out;
+  }
+  .btn-plasma:hover::before {
+    @apply translate-x-0;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-[1px];
+  }
+}
+
+/* Generic Utilities */
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
 /* Global noise overlay */
 body::before {
   content: '';
@@ -11,18 +82,6 @@ body::before {
   opacity: 0.05;
   pointer-events: none;
   z-index: 9999;
-}
-
-* {
-  font-family: 'Sora', sans-serif;
-}
-
-.font-serif {
-  font-family: 'Instrument Serif', serif;
-}
-
-.font-mono {
-  font-family: 'Fira Code', monospace;
 }
 
 /* Driver.js theme overrides */
