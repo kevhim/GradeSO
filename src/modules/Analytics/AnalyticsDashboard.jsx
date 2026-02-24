@@ -88,14 +88,14 @@ export default function AnalyticsDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Best vs Worst */}
                 <div className="flex flex-col gap-6">
-                    <div className="bg-graphite p-6 rounded-[2rem] border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)] h-full flex flex-col justify-center relative overflow-hidden">
-                        <h3 className="text-ghost/50 font-mono text-sm uppercase tracking-widest mb-1 z-10">Best Semester</h3>
+                    <div className="bg-[#12121A] p-6 rounded-[2rem] border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)] h-full flex flex-col justify-center relative overflow-hidden">
+                        <h3 className="text-[#F0EFF4]/50 font-mono text-sm uppercase tracking-widest mb-1 z-10">Best Semester</h3>
                         <div className="text-3xl font-sora font-bold text-white z-10">{bestSem ? bestSem.label : 'N/A'}</div>
                         <div className="text-xl font-mono text-green-400 mt-2 z-10">{bestSem ? getSGPA(bestSem.id).toFixed(2) : '-'} SGPA</div>
                         <div className="absolute -right-4 -bottom-4 text-green-500/10 text-9xl">↑</div>
                     </div>
-                    <div className="bg-graphite p-6 rounded-[2rem] border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.1)] h-full flex flex-col justify-center relative overflow-hidden">
-                        <h3 className="text-ghost/50 font-mono text-sm uppercase tracking-widest mb-1 z-10">Worst Semester</h3>
+                    <div className="bg-[#12121A] p-6 rounded-[2rem] border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.1)] h-full flex flex-col justify-center relative overflow-hidden">
+                        <h3 className="text-[#F0EFF4]/50 font-mono text-sm uppercase tracking-widest mb-1 z-10">Worst Semester</h3>
                         <div className="text-3xl font-sora font-bold text-white z-10">{worstSem ? worstSem.label : 'N/A'}</div>
                         <div className="text-xl font-mono text-red-400 mt-2 z-10">{worstSem ? getSGPA(worstSem.id).toFixed(2) : '-'} SGPA</div>
                         <div className="absolute -right-4 -bottom-4 text-red-500/10 text-9xl">↓</div>
@@ -103,7 +103,7 @@ export default function AnalyticsDashboard() {
                 </div>
 
                 {/* Trend Line */}
-                <div className="lg:col-span-2 bg-graphite p-8 rounded-[2rem] border border-white/5">
+                <div className="lg:col-span-2 bg-[#12121A] p-8 rounded-[2rem] border border-white/5">
                     <h3 className="text-xl font-bold font-sora mb-6">Aggregate Trajectory</h3>
                     <div className="w-full h-64">
                         <ResponsiveContainer width="100%" height="100%">
@@ -126,7 +126,7 @@ export default function AnalyticsDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                 {/* Radar Map */}
-                <div className="bg-graphite p-6 rounded-[2rem] border border-white/5 flex flex-col items-center">
+                <div className="bg-[#12121A] p-6 rounded-[2rem] border border-white/5 flex flex-col items-center">
                     <h3 className="font-bold font-sora mb-4 text-center">Subject Radar (Current)</h3>
                     <div className="w-full h-56">
                         <ResponsiveContainer width="100%" height="100%">
@@ -142,7 +142,7 @@ export default function AnalyticsDashboard() {
                 </div>
 
                 {/* Credit Yield Donut */}
-                <div className="bg-graphite p-6 rounded-[2rem] border border-white/5 flex flex-col items-center">
+                <div className="bg-[#12121A] p-6 rounded-[2rem] border border-white/5 flex flex-col items-center">
                     <h3 className="font-bold font-sora mb-4 text-center">Credit Yield (All Time)</h3>
                     <div className="w-full h-48 relative">
                         <ResponsiveContainer width="100%" height="100%">
@@ -156,14 +156,14 @@ export default function AnalyticsDashboard() {
                             </PieChart>
                         </ResponsiveContainer>
                         <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
-                            <span className="text-3xl font-sora font-bold text-plasma">{totalECU}</span>
-                            <span className="text-xs text-ghost/50 font-mono">/ {totalACU} ACU</span>
+                            <span className="text-3xl font-sora font-bold text-[#7B61FF]">{totalECU}</span>
+                            <span className="text-xs text-[#F0EFF4]/50 font-mono">/ {totalACU} ACU</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Grade Distribution Bar */}
-                <div className="bg-graphite p-6 rounded-[2rem] border border-white/5 flex flex-col items-center">
+                <div className="bg-[#12121A] p-6 rounded-[2rem] border border-white/5 flex flex-col items-center">
                     <h3 className="font-bold font-sora mb-4 text-center">Grade Distribution</h3>
                     <div className="w-full h-56">
                         <ResponsiveContainer width="100%" height="100%">
@@ -179,15 +179,15 @@ export default function AnalyticsDashboard() {
             </div>
 
             {/* Heatmap Section */}
-            <div className="bg-graphite p-8 rounded-[2rem] border border-white/5 overflow-x-auto">
+            <div className="bg-[#12121A] p-8 rounded-[2rem] border border-white/5 overflow-x-auto">
                 <div className="flex items-center gap-3 mb-6">
                     <h3 className="font-bold font-sora text-xl">Smart Subject Vulnerability Heatmap</h3>
-                    <span className="text-xs font-mono bg-plasma/20 text-plasma px-2 py-1 rounded-md uppercase">Core System</span>
+                    <span className="text-xs font-mono bg-[#7B61FF]/20 text-[#7B61FF] px-2 py-1 rounded-md uppercase">Core System</span>
                 </div>
 
                 <div className="min-w-[600px]">
                     {/* Header Row */}
-                    <div className="flex mb-2 pb-2 border-b border-white/10 text-ghost/50 font-mono text-sm">
+                    <div className="flex mb-2 pb-2 border-b border-white/10 text-[#F0EFF4]/50 font-mono text-sm">
                         <div className="w-32 flex-shrink-0">Subject</div>
                         <div className="flex-1 flex" style={{ display: 'grid', gridTemplateColumns: `repeat(${sortedSemesters.length}, 1fr)`, gap: '4px' }}>
                             {sortedSemesters.map(sem => (
@@ -198,11 +198,11 @@ export default function AnalyticsDashboard() {
 
                     {/* Matrix Rows */}
                     {Object.keys(subjectMatrix).length === 0 ? (
-                        <div className="text-center text-ghost/40 py-8 font-mono">No subect data available across semesters yet.</div>
+                        <div className="text-center text-[#F0EFF4]/40 py-8 font-mono">No subect data available across semesters yet.</div>
                     ) : (
                         Object.keys(subjectMatrix).map(subject => (
                             <div key={subject} className="flex mb-2 group">
-                                <div className="w-32 flex-shrink-0 font-bold font-mono text-sm flex items-center group-hover:text-plasma transition-colors">{subject}</div>
+                                <div className="w-32 flex-shrink-0 font-bold font-mono text-sm flex items-center group-hover:text-[#7B61FF] transition-colors">{subject}</div>
                                 <div className="flex-1 flex" style={{ display: 'grid', gridTemplateColumns: `repeat(${sortedSemesters.length}, 1fr)`, gap: '4px' }}>
                                     {sortedSemesters.map(sem => {
                                         const gp = subjectMatrix[subject][sem.label];

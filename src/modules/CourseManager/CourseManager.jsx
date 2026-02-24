@@ -130,30 +130,30 @@ export default function CourseManager() {
             <div className="max-w-6xl w-full flex flex-col gap-6">
                 <h2 className="text-2xl font-bold font-sora">Course Manager</h2>
 
-                <div className="overflow-x-auto rounded-[2rem] bg-graphite shadow-2xl p-6 border border-white/5">
+                <div className="overflow-x-auto rounded-[2rem] bg-[#12121A] shadow-2xl p-6 border border-white/5">
                     <table className="w-full min-w-[800px] text-left border-collapse">
                         <thead>
-                            <tr className="text-ghost/70 text-sm font-mono border-b border-white/10">
+                            <tr className="text-[#F0EFF4]/70 text-sm font-mono border-b border-white/10">
                                 <th className="pb-4 font-normal w-12 text-center">Sno</th>
                                 <th className="pb-4 font-normal">Course Code</th>
                                 <th className="pb-4 font-normal w-1/4">Course Title</th>
                                 <th className="pb-4 font-normal text-center">Max Total</th>
                                 <th className="pb-4 font-normal text-center">ACU</th>
                                 <th className="pb-4 font-normal text-center">Grade</th>
-                                <th className="pb-4 font-normal text-center text-plasma">GP</th>
-                                <th className="pb-4 font-normal text-center text-plasma">CP</th>
-                                <th className="pb-4 font-normal text-center text-plasma">ECU</th>
+                                <th className="pb-4 font-normal text-center text-[#7B61FF]">GP</th>
+                                <th className="pb-4 font-normal text-center text-[#7B61FF]">CP</th>
+                                <th className="pb-4 font-normal text-center text-[#7B61FF]">ECU</th>
                                 <th className="pb-4 font-normal text-center">Del</th>
                             </tr>
                         </thead>
                         <tbody>
                             {courses.map((course, index) => (
                                 <tr key={course.id} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors group">
-                                    <td className="py-4 text-center text-ghost/50">{index + 1}</td>
+                                    <td className="py-4 text-center text-[#F0EFF4]/50">{index + 1}</td>
                                     <td className="py-4">
                                         <input
                                             type="text"
-                                            className="bg-transparent text-ghost outline-none border-b border-transparent focus:border-plasma w-24"
+                                            className="bg-transparent text-[#F0EFF4] outline-none border-b border-transparent focus:border-[#7B61FF] w-24"
                                             value={course.course_code || ''}
                                             onChange={(e) => handleUpdate(course.id, 'course_code', e.target.value.toUpperCase())}
                                         />
@@ -161,15 +161,15 @@ export default function CourseManager() {
                                     <td className="py-4 pr-4">
                                         <input
                                             type="text"
-                                            className="bg-transparent text-ghost outline-none border-b border-transparent focus:border-plasma w-full"
+                                            className="bg-transparent text-[#F0EFF4] outline-none border-b border-transparent focus:border-[#7B61FF] w-full"
                                             value={course.course_name || ''}
                                             onChange={(e) => handleUpdate(course.id, 'course_name', e.target.value)}
                                         />
                                     </td>
-                                    <td className="py-4 text-center text-ghost/50 font-mono">100</td>
+                                    <td className="py-4 text-center text-[#F0EFF4]/50 font-mono">100</td>
                                     <td className="py-4 text-center">
                                         <select
-                                            className="bg-[#1A1A24] text-ghost border border-white/10 rounded-lg p-1 outline-none focus:border-plasma appearance-none text-center cursor-pointer"
+                                            className="bg-[#1A1A24] text-[#F0EFF4] border border-white/10 rounded-lg p-1 outline-none focus:border-[#7B61FF] appearance-none text-center cursor-pointer"
                                             value={course.acu}
                                             onChange={(e) => handleUpdate(course.id, 'acu', e.target.value)}
                                         >
@@ -178,20 +178,20 @@ export default function CourseManager() {
                                     </td>
                                     <td className="py-4 text-center">
                                         <select
-                                            className="bg-[#1A1A24] text-ghost border border-white/10 rounded-lg p-1 outline-none focus:border-plasma appearance-none text-center cursor-pointer font-bold"
+                                            className="bg-[#1A1A24] text-[#F0EFF4] border border-white/10 rounded-lg p-1 outline-none focus:border-[#7B61FF] appearance-none text-center cursor-pointer font-bold"
                                             value={course.grade}
                                             onChange={(e) => handleUpdate(course.id, 'grade', e.target.value)}
                                         >
                                             {['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'F'].map(g => <option key={g} value={g}>{g}</option>)}
                                         </select>
                                     </td>
-                                    <td className="py-4 text-center text-plasma font-mono font-semibold">{course.gp}</td>
-                                    <td className="py-4 text-center text-plasma font-mono font-semibold">{course.cp}</td>
-                                    <td className="py-4 text-center text-plasma font-mono font-semibold">{course.ecu}</td>
+                                    <td className="py-4 text-center text-[#7B61FF] font-mono font-semibold">{course.gp}</td>
+                                    <td className="py-4 text-center text-[#7B61FF] font-mono font-semibold">{course.cp}</td>
+                                    <td className="py-4 text-center text-[#7B61FF] font-mono font-semibold">{course.ecu}</td>
                                     <td className="py-4 text-center">
                                         <button
                                             onClick={() => handleDelete(course.id)}
-                                            className="text-ghost/30 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 p-2"
+                                            className="text-[#F0EFF4]/30 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 p-2"
                                             title="Delete Course"
                                         >
                                             <Trash2 size={18} />
@@ -203,13 +203,13 @@ export default function CourseManager() {
                     </table>
 
                     {courses.length === 0 && (
-                        <div className="py-12 text-center text-ghost/40 font-mono">No courses in this semester.</div>
+                        <div className="py-12 text-center text-[#F0EFF4]/40 font-mono">No courses in this semester.</div>
                     )}
 
                     <div className="mt-6 flex">
                         <button
                             onClick={handleAddCourse}
-                            className="group flex items-center gap-2 bg-plasma/10 text-plasma hover:bg-plasma hover:text-white px-5 py-3 rounded-full font-semibold transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.03]"
+                            className="group flex items-center gap-2 bg-[#7B61FF]/10 text-[#7B61FF] hover:bg-[#7B61FF] hover:text-white px-5 py-3 rounded-full font-semibold transition-all duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.03]"
                         >
                             <Plus size={18} />
                             Add Course

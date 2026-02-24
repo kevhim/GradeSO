@@ -78,8 +78,8 @@ export default function GoalTracker() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Tracker Panel */}
-                <div className="bg-graphite rounded-[2rem] p-8 border border-white/5 flex flex-col items-center justify-center text-center">
-                    <h3 className="text-xl font-bold font-sora mb-6 text-ghost/80">Semester Target</h3>
+                <div className="bg-[#12121A] rounded-[2rem] p-8 border border-white/5 flex flex-col items-center justify-center text-center">
+                    <h3 className="text-xl font-bold font-sora mb-6 text-[#F0EFF4]/80">Semester Target</h3>
 
                     <div className="relative w-48 h-48 flex items-center justify-center mb-6">
                         {/* Background Ring */}
@@ -105,11 +105,11 @@ export default function GoalTracker() {
 
                         {/* Center Text */}
                         <div className="flex flex-col items-center">
-                            <span className={`text-3xl font-bold font-sora ${isGoalMet ? 'text-green-400' : 'text-plasma'}`}>
+                            <span className={`text-3xl font-bold font-sora ${isGoalMet ? 'text-green-400' : 'text-[#7B61FF]'}`}>
                                 {currentSGPA.toFixed(2)}
                             </span>
                             <div className="w-8 h-[1px] bg-ghost/20 my-1"></div>
-                            <span className="text-ghost/50 text-sm font-mono">{targetSGPA.toFixed(2)}</span>
+                            <span className="text-[#F0EFF4]/50 text-sm font-mono">{targetSGPA.toFixed(2)}</span>
                         </div>
 
                         {isGoalMet && (
@@ -117,8 +117,8 @@ export default function GoalTracker() {
                         )}
                     </div>
 
-                    <div className="flex items-center gap-3 bg-void/50 px-4 py-2 rounded-xl mb-4 border border-white/5">
-                        <label className="text-ghost/70 font-mono text-sm">Target:</label>
+                    <div className="flex items-center gap-3 bg-[#0A0A14]/50 px-4 py-2 rounded-xl mb-4 border border-white/5">
+                        <label className="text-[#F0EFF4]/70 font-mono text-sm">Target:</label>
                         <input
                             type="number" step="0.1" min="0" max="10"
                             value={targetSGPA}
@@ -127,7 +127,7 @@ export default function GoalTracker() {
                         />
                     </div>
 
-                    <p className="text-sm font-mono text-ghost/50 h-10">
+                    <p className="text-sm font-mono text-[#F0EFF4]/50 h-10">
                         {totalACU === 0
                             ? 'Add courses to see progress.'
                             : isGoalMet
@@ -139,23 +139,23 @@ export default function GoalTracker() {
                 </div>
 
                 {/* Streak Panel */}
-                <div className="bg-graphite rounded-[2rem] p-8 border border-white/5 flex flex-col justify-center">
-                    <h3 className="text-xl font-bold font-sora mb-6 text-ghost/80">Consistency Engine</h3>
+                <div className="bg-[#12121A] rounded-[2rem] p-8 border border-white/5 flex flex-col justify-center">
+                    <h3 className="text-xl font-bold font-sora mb-6 text-[#F0EFF4]/80">Consistency Engine</h3>
 
-                    <div className="flex items-center gap-4 bg-void/30 p-6 rounded-2xl border border-white/5 mb-6">
+                    <div className="flex items-center gap-4 bg-[#0A0A14]/30 p-6 rounded-2xl border border-white/5 mb-6">
                         <div className="text-5xl">🔥</div>
                         <div>
                             <div className="text-2xl font-bold font-sora text-white">
                                 {streak} Semester Streak
                             </div>
-                            <p className="text-ghost/50 text-sm mt-1">
+                            <p className="text-[#F0EFF4]/50 text-sm mt-1">
                                 {streak >= 2 ? `You've improved your SGPA for ${streak} consecutive semesters!` : 'Keep pushing to build your improvement streak.'}
                             </p>
                         </div>
                     </div>
 
                     <div className="mb-4">
-                        <h4 className="font-mono text-xs text-ghost/50 tracking-widest uppercase mb-4">Historical Deltas</h4>
+                        <h4 className="font-mono text-xs text-[#F0EFF4]/50 tracking-widest uppercase mb-4">Historical Deltas</h4>
                         <div className="flex items-end gap-2 h-24">
                             {sortedSemesters.map((sem, i) => {
                                 if (i === 0) return null; // No delta for first semester
@@ -174,18 +174,18 @@ export default function GoalTracker() {
                                             className={`w-full rounded-sm ${isPositive ? 'bg-green-500/50 hover:bg-green-500' : 'bg-red-500/50 hover:bg-red-500'} transition-all`}
                                             style={{ height: `${height}px`, minHeight: '4px' }}
                                         />
-                                        <span className="text-[10px] text-ghost/30">S{sem.semester_number}</span>
+                                        <span className="text-[10px] text-[#F0EFF4]/30">S{sem.semester_number}</span>
                                     </div>
                                 );
                             })}
                             {sortedSemesters.length <= 1 && (
-                                <div className="w-full text-center text-sm text-ghost/30 font-mono mt-8">Need more semesters to show history.</div>
+                                <div className="w-full text-center text-sm text-[#F0EFF4]/30 font-mono mt-8">Need more semesters to show history.</div>
                             )}
                         </div>
                     </div>
 
                     {bestDeltaText && (
-                        <div className="text-sm font-mono text-plasma bg-plasma/10 px-4 py-2 rounded-lg text-center mt-auto">
+                        <div className="text-sm font-mono text-[#7B61FF] bg-[#7B61FF]/10 px-4 py-2 rounded-lg text-center mt-auto">
                             {bestDeltaText}
                         </div>
                     )}

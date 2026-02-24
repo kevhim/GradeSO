@@ -68,7 +68,7 @@ export default function WhatIfSimulator({ currentCourses, currentSGPA }) {
     const delta = parseFloat((simulatedSGPA - currentSGPA).toFixed(2));
 
     return (
-        <div className="bg-graphite rounded-[2rem] border border-plasma/20 overflow-hidden transition-all duration-300">
+        <div className="bg-[#12121A] rounded-[2rem] border border-[#7B61FF]/20 overflow-hidden transition-all duration-300">
             <div
                 className="p-6 flex justify-between items-center cursor-pointer hover:bg-white/5"
                 onClick={() => setIsOpen(!isOpen)}
@@ -76,23 +76,23 @@ export default function WhatIfSimulator({ currentCourses, currentSGPA }) {
                 <div>
                     <h3 className="text-xl font-bold font-sora flex items-center gap-3">
                         What-If Simulator
-                        <span className="text-xs bg-plasma/20 text-plasma px-2 py-1 rounded-full font-mono uppercase tracking-wider">Experimental</span>
+                        <span className="text-xs bg-[#7B61FF]/20 text-[#7B61FF] px-2 py-1 rounded-full font-mono uppercase tracking-wider">Experimental</span>
                     </h3>
-                    <p className="text-ghost/60 text-sm mt-1">See how changing a specific grade impacts your SGPA.</p>
+                    <p className="text-[#F0EFF4]/60 text-sm mt-1">See how changing a specific grade impacts your SGPA.</p>
                 </div>
-                <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-ghost/50 transition-transform duration-300" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-[#F0EFF4]/50 transition-transform duration-300" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
                     ↓
                 </div>
             </div>
 
             {isOpen && (
-                <div className="p-6 border-t border-white/5 bg-void/50">
+                <div className="p-6 border-t border-white/5 bg-[#0A0A14]/50">
 
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 bg-graphite p-4 rounded-2xl border border-white/5">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 bg-[#12121A] p-4 rounded-2xl border border-white/5">
                         <div className="font-mono text-lg flex items-center gap-4">
-                            <span className="text-ghost/50">Current: {currentSGPA.toFixed(2)}</span>
-                            <span className="text-ghost/30">→</span>
-                            <span className="font-bold">Simulated: <span className={delta >= 0 ? (delta > 0 ? 'text-green-400' : 'text-ghost') : 'text-red-400'}>{simulatedSGPA.toFixed(2)}</span></span>
+                            <span className="text-[#F0EFF4]/50">Current: {currentSGPA.toFixed(2)}</span>
+                            <span className="text-[#F0EFF4]/30">→</span>
+                            <span className="font-bold">Simulated: <span className={delta >= 0 ? (delta > 0 ? 'text-green-400' : 'text-[#F0EFF4]') : 'text-red-400'}>{simulatedSGPA.toFixed(2)}</span></span>
                         </div>
 
                         {delta !== 0 && (
@@ -114,16 +114,16 @@ export default function WhatIfSimulator({ currentCourses, currentSGPA }) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {currentCourses.map(course => (
-                            <div key={course.id} className="bg-graphite p-4 rounded-2xl border border-white/5 flex flex-col gap-3">
+                            <div key={course.id} className="bg-[#12121A] p-4 rounded-2xl border border-white/5 flex flex-col gap-3">
                                 <div className="flex justify-between items-start">
                                     <span className="font-bold text-sm line-clamp-1 flex-1 pr-2">{course.course_name}</span>
-                                    <span className="text-ghost/50 text-xs font-mono">{course.course_code}</span>
+                                    <span className="text-[#F0EFF4]/50 text-xs font-mono">{course.course_code}</span>
                                 </div>
                                 <div className="flex justify-between items-center mt-2">
-                                    <span className="text-sm font-mono text-ghost/50">{course.acu} ACU</span>
+                                    <span className="text-sm font-mono text-[#F0EFF4]/50">{course.acu} ACU</span>
                                     <select
-                                        className={`bg-[#1A1A24] text-ghost border rounded-lg p-2 outline-none appearance-none text-center cursor-pointer font-bold w-20
-                      ${simulatedGrades[course.id] !== course.grade ? 'border-plasma text-plasma' : 'border-white/10'}
+                                        className={`bg-[#1A1A24] text-[#F0EFF4] border rounded-lg p-2 outline-none appearance-none text-center cursor-pointer font-bold w-20
+                      ${simulatedGrades[course.id] !== course.grade ? 'border-[#7B61FF] text-[#7B61FF]' : 'border-white/10'}
                     `}
                                         value={simulatedGrades[course.id] || course.grade}
                                         onChange={(e) => handleSimChange(course.id, e.target.value)}
@@ -136,7 +136,7 @@ export default function WhatIfSimulator({ currentCourses, currentSGPA }) {
                             </div>
                         ))}
                         {currentCourses.length === 0 && (
-                            <div className="col-span-full py-4 text-ghost/50 text-center font-mono">No courses available to simulate.</div>
+                            <div className="col-span-full py-4 text-[#F0EFF4]/50 text-center font-mono">No courses available to simulate.</div>
                         )}
                     </div>
                 </div>
