@@ -9,6 +9,7 @@ import CourseManager from '../modules/CourseManager/CourseManager';
 import SGPACalculator from '../modules/Calculator/SGPACalculator';
 import AnalyticsDashboard from '../modules/Analytics/AnalyticsDashboard';
 import AIAdvisorModule from '../modules/AIAdvisor/AIAdvisorModule';
+import AIAdvisorPage from '../modules/AIAdvisor/AIAdvisorPage';
 import GoalTracker from '../modules/GoalTracker/GoalTracker';
 import ExamScanner from '../modules/ExamScanner/ExamScanner';
 import SemesterManager from '../modules/SemesterManager/SemesterManager';
@@ -200,8 +201,9 @@ export default function Dashboard() {
                 );
             case 'ai':
                 return (
-                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <AIAdvisorModule />
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex flex-col gap-8">
+                        <AIAdvisorPage />
+                        <ExamScanner />
                     </div>
                 );
             case 'planner':

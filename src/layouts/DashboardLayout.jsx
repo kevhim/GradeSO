@@ -17,8 +17,8 @@ import { supabase } from '../lib/supabase';
 // Helper for the navigation items
 const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-    { id: 'calculator', label: 'GPA Calculator', icon: <Calculator size={20} /> },
-    { id: 'advisor', label: 'AI Advisor', icon: <Brain size={20} /> },
+    { id: 'gpa', label: 'GPA Calculator', icon: <Calculator size={20} /> },
+    { id: 'ai', label: 'AI Advisor', icon: <Brain size={20} /> },
     { id: 'planner', label: 'Semester Planner', icon: <Calendar size={20} /> },
     { id: 'reports', label: 'Reports', icon: <FileText size={20} /> },
     { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
