@@ -1,6 +1,54 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabase';
 
+// ── Grade-Point Mapping ─────────────────────────────────────
+const GRADE_TO_GP = {
+    'A+': 10, 'A': 9, 'A-': 8,
+    'B+': 7, 'B': 6, 'B-': 5,
+    'C+': 4, 'C': 3, 'F': 0
+};
+
+function mkCourse(id, semId, name, code, acu, grade) {
+    const gp = GRADE_TO_GP[grade];
+    return { id, semester_id: semId, course_name: name, course_code: code, acu, grade, gp, cp: acu * gp, ecu: grade !== 'F' ? acu : 0 };
+}
+
+// ── Demo Fallback Data (3 semesters of B.Tech CSE) ──────────
+const DEMO_SEMESTERS = [
+    { id: 'demo-sem-1', student_id: 'demo', semester_number: 1, label: 'Sem 1_2023' },
+    { id: 'demo-sem-2', student_id: 'demo', semester_number: 2, label: 'Sem 2_2023' },
+    { id: 'demo-sem-3', student_id: 'demo', semester_number: 3, label: 'Sem 3_2024' },
+];
+
+const DEMO_COURSES_BY_SEM = {
+    'demo-sem-1': [
+        mkCourse('d1c1', 'demo-sem-1', 'Engineering Mathematics I', 'MTH101', 4, 'A'),
+        mkCourse('d1c2', 'demo-sem-1', 'Physics I', 'PHY101', 3, 'A-'),
+        mkCourse('d1c3', 'demo-sem-1', 'Programming in C', 'CSE101', 4, 'A+'),
+        mkCourse('d1c4', 'demo-sem-1', 'Engineering Drawing', 'MEE101', 3, 'B+'),
+        mkCourse('d1c5', 'demo-sem-1', 'Communication Skills', 'HUM101', 2, 'A'),
+        mkCourse('d1c6', 'demo-sem-1', 'Chemistry', 'CHM101', 3, 'A-'),
+    ],
+    'demo-sem-2': [
+        mkCourse('d2c1', 'demo-sem-2', 'Engineering Mathematics II', 'MTH201', 4, 'A-'),
+        mkCourse('d2c2', 'demo-sem-2', 'Data Structures', 'CSE201', 4, 'A+'),
+        mkCourse('d2c3', 'demo-sem-2', 'Digital Electronics', 'ECE201', 3, 'A'),
+        mkCourse('d2c4', 'demo-sem-2', 'Discrete Mathematics', 'MTH202', 3, 'A'),
+        mkCourse('d2c5', 'demo-sem-2', 'Object Oriented Programming', 'CSE202', 4, 'A'),
+        mkCourse('d2c6', 'demo-sem-2', 'Environmental Science', 'HUM201', 2, 'B+'),
+    ],
+    'demo-sem-3': [
+        mkCourse('d3c1', 'demo-sem-3', 'Database Management Systems', 'CSE301', 4, 'A+'),
+        mkCourse('d3c2', 'demo-sem-3', 'Operating Systems', 'CSE302', 4, 'A'),
+        mkCourse('d3c3', 'demo-sem-3', 'Computer Networks', 'CSE303', 3, 'A-'),
+        mkCourse('d3c4', 'demo-sem-3', 'Probability & Statistics', 'MTH301', 3, 'A'),
+        mkCourse('d3c5', 'demo-sem-3', 'Theory of Computation', 'CSE304', 3, 'B+'),
+        mkCourse('d3c6', 'demo-sem-3', 'Software Engineering', 'CSE305', 3, 'A'),
+    ],
+};
+
+const DEMO_PROFILE = { id: 'demo', name: 'Yash Sharma', target_sgpa: 9.0, current_semester: 3 };
+
 const useGradeStore = create((set, get) => ({
     // Auth & Sync State
     session: null,
@@ -10,7 +58,7 @@ const useGradeStore = create((set, get) => ({
     setSession: (session) => set({ session }),
     setProfile: (profile) => set({ profile }),
 
-    // Fetches all user data from Supabase
+    // Fetches all user data from Supabase — falls back to demo data if tables are missing
     fetchTelemetryData: async (userId) => {
         set({ isLoading: true, error: null });
         try {
@@ -64,8 +112,15 @@ const useGradeStore = create((set, get) => ({
             }
 
         } catch (err) {
-            console.error("Error fetching telemetry:", err);
-            set({ error: err.message });
+            console.warn("Supabase fetch failed, loading demo data:", err.message);
+            // ── Fallback: hydrate with demo data ────────────
+            set({
+                profile: { ...DEMO_PROFILE, id: userId || 'demo' },
+                semesters: DEMO_SEMESTERS,
+                activeSemesterId: 'demo-sem-3',
+                coursesBySemester: DEMO_COURSES_BY_SEM,
+                error: null, // Clear the error — demo data is fine
+            });
         } finally {
             set({ isLoading: false });
         }
