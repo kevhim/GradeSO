@@ -29,8 +29,8 @@ export default function AnalyticsDashboard() {
 
     // Chart 3: Credit Distribution Data
     const allCourses = Object.values(coursesBySemester).flat();
-    const totalECU = allCourses.reduce((sum, c) => sum + c.ecu, 0);
-    const totalACU = allCourses.reduce((sum, c) => sum + c.acu, 0);
+    const totalECU = allCourses.reduce((sum, c) => sum + Number(c.ecu), 0);
+    const totalACU = allCourses.reduce((sum, c) => sum + Number(c.acu), 0);
     const lost = Math.max(0, totalACU - totalECU);
     const donutData = [
         { name: 'Earned', value: totalECU },

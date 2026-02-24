@@ -4,6 +4,15 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import SkeletonCard from '../components/SkeletonCard';
 import { Target, TrendingUp, CheckCircle, AlertTriangle, Brain } from 'lucide-react';
 
+// Phase 2 Modules
+import CourseManager from '../modules/CourseManager/CourseManager';
+import SGPACalculator from '../modules/Calculator/SGPACalculator';
+import AnalyticsDashboard from '../modules/Analytics/AnalyticsDashboard';
+import AIAdvisorModule from '../modules/AIAdvisor/AIAdvisorModule';
+import GoalTracker from '../modules/GoalTracker/GoalTracker';
+import ExamScanner from '../modules/ExamScanner/ExamScanner';
+import SemesterManager from '../modules/SemesterManager/SemesterManager';
+
 export default function Dashboard() {
     const [activePage, setActivePage] = useState('dashboard');
     const { profile, activeSemesterId, coursesBySemester, getSGPA, getCGPA, semesters } = useGradeStore();
@@ -130,7 +139,7 @@ export default function Dashboard() {
 
                 </div>
 
-                {/* Recent Activity Table Placeholder */}
+                {/* Recent Activity Table */}
                 <div className="bg-[#12121A] border border-[#7B61FF]/10 rounded-[2rem] overflow-hidden mt-4 shadow-lg">
                     <div className="px-8 py-6 border-b border-[#7B61FF]/10 flex items-center justify-between">
                         <h3 className="text-lg font-sora font-bold text-[#F0EFF4]">Recent Telemetry</h3>
@@ -177,18 +186,57 @@ export default function Dashboard() {
         );
     };
 
+    // Render the active page content based on sidebar navigation
+    const renderPageContent = () => {
+        switch (activePage) {
+            case 'dashboard':
+                return renderDashboardHome();
+            case 'gpa':
+                return (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <SGPACalculator />
+                        <CourseManager />
+                    </div>
+                );
+            case 'ai':
+                return (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <AIAdvisorModule />
+                    </div>
+                );
+            case 'planner':
+                return (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <SemesterManager />
+                    </div>
+                );
+            case 'reports':
+                return (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <AnalyticsDashboard />
+                    </div>
+                );
+            case 'settings':
+                return (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <GoalTracker />
+                    </div>
+                );
+            default:
+                return (
+                    <div className="flex items-center justify-center h-full">
+                        <div className="text-center">
+                            <h3 className="text-2xl font-bold text-white mb-2 capitalize">{activePage}</h3>
+                            <p className="text-gray-500">This module is part of Phase 2.</p>
+                        </div>
+                    </div>
+                );
+        }
+    };
+
     return (
         <DashboardLayout activePage={activePage} onNavChange={setActivePage}>
-            {activePage === 'dashboard' ? (
-                renderDashboardHome()
-            ) : (
-                <div className="flex items-center justify-center h-full">
-                    <div className="text-center">
-                        <h3 className="text-2xl font-bold text-white mb-2 capitalize">{activePage}</h3>
-                        <p className="text-gray-500">This module is part of Phase 2.</p>
-                    </div>
-                </div>
-            )}
+            {renderPageContent()}
         </DashboardLayout>
     );
 }
