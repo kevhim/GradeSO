@@ -46,8 +46,8 @@ const useGradeStore = create((set, get) => ({
     getSGPA: (semesterId) => {
         const courses = get().coursesBySemester[semesterId] || [];
         if (!courses.length) return 0;
-        const totalCP = courses.reduce((sum, c) => sum + (c.cp || 0), 0);
-        const totalACU = courses.reduce((sum, c) => sum + (c.acu || 0), 0);
+        const totalCP = courses.reduce((sum, c) => sum + Number(c.cp || 0), 0);
+        const totalACU = courses.reduce((sum, c) => sum + Number(c.acu || 0), 0);
         return totalACU === 0 ? 0 : parseFloat((totalCP / totalACU).toFixed(2));
     },
     getCGPA: () => {

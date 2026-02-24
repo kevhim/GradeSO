@@ -33,8 +33,8 @@ export default function WhatIfSimulator({ currentCourses, currentSGPA }) {
         currentCourses.forEach(c => {
             const simGrade = simulatedGrades[c.id] || c.grade;
             const gp = GRADE_TO_GP[simGrade] !== undefined ? GRADE_TO_GP[simGrade] : 0;
-            totalCP += gp * c.acu;
-            totalACU += c.acu;
+            totalCP += gp * Number(c.acu);
+            totalACU += Number(c.acu);
         });
 
         const newSgpa = totalACU === 0 ? 0 : parseFloat((totalCP / totalACU).toFixed(2));

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, BarChart2, Target, Grid, Sun, Moon, LogOut, Menu, X } from 'lucide-react';
+import { BookOpen, BarChart2, Target, Grid, Sun, Moon, LogOut, Menu, X, Scan } from 'lucide-react';
 import useGradeStore from '../store/useGradeStore';
 import { supabase } from '../lib/supabase';
 
@@ -17,6 +17,7 @@ import SGPACalculator from '../modules/Calculator/SGPACalculator';
 import AnalyticsDashboard from '../modules/Analytics/AnalyticsDashboard';
 import AIAdvisorModule from '../modules/AIAdvisor/AIAdvisorModule';
 import GoalTracker from '../modules/GoalTracker/GoalTracker';
+import ExamScanner from '../modules/ExamScanner/ExamScanner';
 
 // Inline Stub for SemesterManager just to make Phase 2 render cleanly.
 // When Phase 1 merges, this file will just import from the real path if it exists.
@@ -43,6 +44,7 @@ export default function Dashboard() {
         { id: 'analytics', label: 'Analytics', icon: <BarChart2 size={20} /> },
         { id: 'goals', label: 'Goals', icon: <Target size={20} /> },
         { id: 'heatmap', label: 'Heatmap', icon: <Grid size={20} /> },
+        { id: 'scanner', label: 'Scanner', icon: <Scan size={20} /> },
     ];
 
     return (
@@ -110,8 +112,8 @@ export default function Dashboard() {
                                     key={item.id}
                                     onClick={() => setActiveView(item.id)}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 font-semibold ${activeView === item.id
-                                            ? 'bg-plasma text-white shadow-[0_4px_20px_-5px_#7B61FF]'
-                                            : `text-ghost/60 hover:bg-white/5 hover:text-ghost`
+                                        ? 'bg-plasma text-white shadow-[0_4px_20px_-5px_#7B61FF]'
+                                        : `text-ghost/60 hover:bg-white/5 hover:text-ghost`
                                         }`}
                                 >
                                     {item.icon}
@@ -196,6 +198,12 @@ export default function Dashboard() {
                     {activeView === 'heatmap' && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <AnalyticsDashboard />
+                        </div>
+                    )}
+
+                    {activeView === 'scanner' && (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <ExamScanner />
                         </div>
                     )}
                 </main>

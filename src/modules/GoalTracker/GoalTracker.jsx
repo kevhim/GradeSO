@@ -30,8 +30,8 @@ export default function GoalTracker() {
     };
 
     // Calculations for missing CP
-    const totalACU = courses.reduce((sum, c) => sum + c.acu, 0);
-    const currentCP = courses.reduce((sum, c) => sum + c.cp, 0);
+    const totalACU = courses.reduce((sum, c) => sum + Number(c.acu), 0);
+    const currentCP = courses.reduce((sum, c) => sum + Number(c.cp), 0);
     const targetCP = targetSGPA * totalACU;
     const missingCP = Math.max(0, targetCP - currentCP);
 
